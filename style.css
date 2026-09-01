@@ -86,3 +86,81 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ===== HORIZONTAL FACTORY & EXPORT GALLERY ===== */
+
+.gallery-grid {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 0 20px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.gallery-grid::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gallery-grid::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
+
+.gallery-card {
+  flex: 0 0 360px;
+  height: 360px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  scroll-snap-align: start;
+}
+
+.gallery-card.gallery-large {
+  flex: 0 0 560px;
+  height: 360px;
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 18px;
+  background: linear-gradient(
+    transparent,
+    rgba(0, 0, 0, 0.85)
+  );
+  color: #fff;
+}
+
+.gallery-caption strong {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 6px;
+}
+
+.gallery-caption span {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Mobile */
+@media (max-width: 680px) {
+  .gallery-card {
+    flex: 0 0 300px;
+    height: 300px;
+  }
+
+  .gallery-card.gallery-large {
+    flex: 0 0 300px;
+    height: 300px;
+  }
+}
