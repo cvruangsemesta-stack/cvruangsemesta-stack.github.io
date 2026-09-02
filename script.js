@@ -1,44 +1,160 @@
 /* PT. Alfa Sentra Wisesa - website configuration */
-const BUSINESS_EMAIL = 'REPLACE_WITH_YOUR_BUSINESS_EMAIL';
-const WHATSAPP_NUMBER = ''; // Example format: 62812XXXXXXXXX (digits only). Do not include + or spaces.
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const BUSINESS_EMAIL = 'export@alfasentrawisesa.org';
+const WHATSAPP_NUMBER = '628133154451';
+
+
+/* =========================
+   FOOTER YEAR
+========================= */
+
+const yearElement = document.getElementById('year');
+
+if (yearElement) {
+  yearElement.textContent = new Date().getFullYear();
+}
+
+
+/* =========================
+   MOBILE MENU
+========================= */
 
 const menuToggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.nav');
-if (menuToggle) {
+
+if (menuToggle && nav) {
   menuToggle.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
-    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+    menuToggle.setAttribute(
+      'aria-expanded',
+      open ? 'true' : 'false'
+    );
   });
 }
 
-document.querySelectorAll('.nav a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
-const waButton = document.getElementById('waButton');
-if (WHATSAPP_NUMBER) {
-  waButton.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Hello PT. Alfa Sentra Wisesa, I would like to request a quotation.')}`;
-  waButton.target = '_blank';
-} else {
-  waButton.href = '#quote';
+/* Close mobile menu after clicking navigation */
+
+if (nav) {
+  document.querySelectorAll('.nav a').forEach((a) => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('open');
+
+      if (menuToggle) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
 }
 
-document.getElementById('quoteForm').addEventListener('submit', (event) => {
-  event.preventDefault();
-  const form = new FormData(event.currentTarget);
-  const subject = `Charcoal Export Inquiry - ${form.get('product')}`;
-  const body = [
-    `Company / Name: ${form.get('name')}`,
-    `Email: ${form.get('email')}`,
-    `Product: ${form.get('product')}`,
-    `Quantity: ${form.get('quantity')}`,
-    `Destination: ${form.get('destination')}`,
-    '',
-    `Message: ${form.get('message')}`
-  ].join('\n');
-  if (BUSINESS_EMAIL === 'REPLACE_WITH_YOUR_BUSINESS_EMAIL') {
-    alert('Please set your business email address in script.js before using this inquiry form.');
-    return;
+
+/* =========================
+   WHATSAPP BUTTON
+========================= */
+
+const waButton = document.getElementById('waButton');
+
+if (waButton) {
+
+  if (WHATSAPP_NUMBER) {
+
+    const whatsappMessage =
+      'Hello PT. Alfa Sentra Wisesa, I would like to request a quotation.';
+
+    waButton.href =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappMessage)}`;
+
+    waButton.target = '_blank';
+    waButton.rel = 'noopener noreferrer';
+
+  } else {
+
+    waButton.href = '#quote';
+
   }
-  window.location.href = `mailto:${BUSINESS_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-});
+}
+
+
+/* =========================
+   REQUEST A QUOTE FORM
+========================= */
+
+const quoteForm = document.getElementById('quoteForm');
+
+if (quoteForm) {
+
+  quoteForm.addEventListener('submit', (event) => {
+
+    event.preventDefault();
+
+    const form = new FormData(event.currentTarget);
+
+    const companyName = form.get('name') || '';
+    const buyerEmail = form.get('email') || '';
+    const product = form.get('product') || '';
+    const quantity = form.get('quantity') || '';
+    const destination = form.get('destination') || '';
+    const message = form.get('message') || '';
+
+
+    /* Email subject */
+
+    const subject =
+      `Charcoal Export Inquiry - ${product}`;
+
+
+    /* Email body */
+
+    const body = [
+
+      `Company / Name: ${companyName}`,
+
+      `Email: ${buyerEmail}`,
+
+      `Product: ${product}`,
+
+      `Quantity: ${quantity}`,
+
+      `Destination: ${destination}`,
+
+      '',
+
+      `Message: ${message}`,
+
+      '',
+
+      '---',
+
+      'PT. Alfa Sentra Wisesa',
+
+      'Indonesia • Export'
+
+    ].join('\n');
+
+
+    /* Check business email */
+
+    if (
+      !BUSINESS_EMAIL ||
+      BUSINESS_EMAIL === 'REPLACE_WITH_YOUR_BUSINESS_EMAIL'
+    ) {
+
+      alert(
+        'Business email is not configured. Please contact PT. Alfa Sentra Wisesa directly.'
+      );
+
+      return;
+    }
+
+
+    /* Open email application */
+
+    window.location.href =
+      `mailto:${BUSINESS_EMAIL}` +
+      `?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`;
+
+  });
+
+}
