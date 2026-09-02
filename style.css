@@ -164,3 +164,58 @@
     height: 300px;
   }
 }
+
+
+/* ===== HORIZONTAL GALLERY ===== */
+.gallery {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 4px 20px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+
+.gallery::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gallery::-webkit-scrollbar-thumb {
+  background: #0b2b1e;
+  border-radius: 10px;
+}
+
+.gallery::-webkit-scrollbar-track {
+  background: #e9eee9;
+}
+
+.gallery-item,
+.gallery-item.tall,
+.gallery-item.wide {
+  flex: 0 0 420px;
+  width: 420px;
+  height: 360px;
+  grid-column: auto;
+  grid-row: auto;
+  scroll-snap-align: start;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 680px) {
+  .gallery-item,
+  .gallery-item.tall,
+  .gallery-item.wide {
+    flex: 0 0 85vw;
+    width: 85vw;
+    height: 300px;
+  }
+}
