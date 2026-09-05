@@ -150,10 +150,14 @@ if (quoteForm) {
 
     /* Open email application */
 
-    window.location.href =
-      `mailto:${BUSINESS_EMAIL}` +
-      `?subject=${encodeURIComponent(subject)}` +
-      `&body=${encodeURIComponent(body)}`;
+    const gmailUrl =
+  `https://mail.google.com/mail/?view=cm` +
+  `&fs=1` +
+  `&to=${encodeURIComponent(BUSINESS_EMAIL)}` +
+  `&su=${encodeURIComponent(subject)}` +
+  `&body=${encodeURIComponent(body)}`;
+
+window.open(gmailUrl, '_blank');
 
   });
 
